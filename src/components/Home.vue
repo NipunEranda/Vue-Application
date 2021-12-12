@@ -6,17 +6,16 @@
     >
       <div class="row">
         <div class="col-8">
-          <label
-            style="border: 1px solid black; padding: 1% 2% 1% 2%; color: black"
-            ><i class="fa fa-search"></i
-          ></label>
-          <input
-            v-model="input"
-            type="text"
-            name="search"
-            id="search"
-            class="default new"
-          />
+          <div class="form-group has-search">
+            <span class="fa fa-search form-control-feedback"></span>
+            <input
+              v-model="input"
+              id="search"
+              type="text"
+              class="form-control"
+              placeholder="Search"
+            />
+          </div>
         </div>
         <div class="col-4" style="text-align: right">
           <label
@@ -52,16 +51,21 @@
             <span>
               {{
                 "/" +
-                new Date(job.startTime).getFullYear() +
+                new Date(job.startTime).toLocaleString("default", {
+                  year: "numeric",
+                }) +
                 "-" +
-                new Date(
-                  new Date(job.startTime).setMonth(
-                    new Date(job.startTime).getMonth() + 1
-                  )
-                ).getMonth() +
+                new Date(job.startTime).toLocaleString("default", {
+                  month: "numeric",
+                }) +
                 "-" +
-                new Date(job.startTime).getDate() +
-                new Date(job.startTime).toLocaleString().split(",")[1]
+                new Date(job.startTime).toLocaleString("default", {
+                  day: "numeric",
+                }) +
+                " " +
+                new Date(job.startTime)
+                  .toUTCString("si-LK", { hour12: false })
+                  .split(" ")[4]
               }}
             </span>
           </div>
@@ -93,20 +97,14 @@
         class="navContainer row"
         style="margin-top: 10px; text-align: center"
       >
-        <div
-          class="col-sm disable-select"
-          style="padding: 10px; background: lightGrey; cursor: pointer"
-          v-on:click="prevPage()"
-        >
-          Prev
-        </div>
-        <div
-          class="col-sm disable-select"
-          style="padding: 10px; background: lightGrey; cursor: pointer"
-          v-on:click="nextPage()"
-        >
-          Next
-        </div>
+        <ul class="pagination">
+          <li class="page-item disable-select" :class="isAtFirstPage(startIndex)" v-on:click="prevPage()" style="width: 50%;float: left;">
+            <a class="page-link" href="#" tabindex="-1">Previous</a>
+          </li>
+          <li class="page-item disable-select" v-on:click="nextPage()" style="width: 50%;float: right;">
+            <a class="page-link" href="#">Next</a>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -187,6 +185,13 @@ export default {
           ) {
             return job;
           }
+          if (
+            job.startTime
+              .toLowerCase()
+              .includes(this.searchTerm.trim().toLowerCase())
+          ) {
+            return job;
+          }
         });
         this.rowCount = tempList.length;
         this.items = [...tempList];
@@ -242,11 +247,27 @@ export default {
 }
 
 .record:hover {
-  background-color: lightgray;
+  background-color: rgb(245, 245, 245);
 }
 
 .record span {
   margin-left: 2%;
+}
+
+.has-search .form-control {
+  padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+  color: #aaa;
 }
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
 </style>

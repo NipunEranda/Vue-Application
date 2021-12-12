@@ -61,6 +61,9 @@ Vue.mixin({
         return seconds + "s";
       }
     },
+    isAtFirstPage(startIndex){
+      return startIndex === 1 ? "disabled" : "";
+    },
   }
 });
 

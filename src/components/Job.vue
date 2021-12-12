@@ -8,16 +8,21 @@
         <div class="col-8 topic">
           Files /
           {{
-            new Date(job.queuedTime).getFullYear() +
+            new Date(job.queuedTime).toLocaleString("default", {
+              year: "numeric",
+            }) +
             "-" +
-            new Date(
-              new Date(job.queuedTime).setMonth(
-                new Date(job.queuedTime).getMonth() + 1
-              )
-            ).getMonth() +
+            new Date(job.queuedTime).toLocaleString("default", {
+              month: "numeric",
+            }) +
             "-" +
-            new Date(job.queuedTime).getDate() +
-            new Date(job.queuedTime).toLocaleString().split(",")[1]
+            new Date(job.queuedTime).toLocaleString("default", {
+              day: "numeric",
+            }) +
+            " " +
+            new Date(job.queuedTime)
+              .toUTCString("si-LK", { hour12: false })
+              .split(" ")[4]
           }}
         </div>
         <div class="col-4">
@@ -54,15 +59,41 @@
           </div>
           <div class="col-2">
             {{
-              new Date(job.queuedTime).getDate() +
+              new Date(job.queuedTime).toLocaleString("default", {
+                day: "numeric",
+              }) +
               " " +
               new Date(job.queuedTime).toLocaleString("default", {
                 month: "short",
-              }) + " " + new Date(job.queuedTime).getFullYear() + " " + new Date(job.queuedTime).toLocaleString().split(",")[1] 
+              }) +
+              " " +
+              new Date(job.queuedTime).toLocaleString("default", {
+                year: "numeric",
+              }) +
+              " " +
+              new Date(job.queuedTime)
+                .toUTCString("si-LK", { hour12: false })
+                .split(" ")[4]
             }}
           </div>
-          <div class="col-3">{{ job.startTime === "" ? " - " : new Date(job.startTime).toLocaleString().split(",")[1]  }}</div>
-          <div class="col-3">{{ job.endTime === "" ? " - " : new Date(job.endTime).toLocaleString().split(",")[1]  }}</div>
+          <div class="col-3">
+            {{
+              job.startTime === ""
+                ? " - "
+                : new Date(job.startTime)
+                    .toUTCString("si-LK", { hour12: false })
+                    .split(" ")[4]
+            }}
+          </div>
+          <div class="col-3">
+            {{
+              job.endTime === ""
+                ? " - "
+                : new Date(job.endTime)
+                    .toUTCString("si-LK", { hour12: false })
+                    .split(" ")[4]
+            }}
+          </div>
           <div class="col-2" style="text-align: right">
             {{ calculateDuration(job) }}
           </div>
@@ -93,11 +124,6 @@ export default {
     goToHome() {
       this.$router.push("/");
     },
-    loadJsonData() {
-      setTimeout(() => {
-        this.jobs = require("../data/JobJsonFile.json").jobs;
-      }, 300);
-    },
     filterById(jsonObject, id) {
       this.job = jsonObject.filter(function (jsonObject) {
         return jsonObject["id"] == id;
@@ -115,7 +141,7 @@ export default {
   margin-top: 20px;
   border-radius: 20px;
   padding: 1%;
-  background-color: rgb(237, 249, 253);
+  background-color: rgb(245, 245, 245);
   color: rgb(16, 116, 173);
 }
 
