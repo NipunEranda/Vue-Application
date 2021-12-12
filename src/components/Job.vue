@@ -3,7 +3,6 @@
     <div class="container">
       <div>
         <span>{{ filterById(jobs, id) }}</span>
-                <span> {{ job.id }} </span>
       </div>
       <div class="topicBar row">
         <div class="col-8 topic">
