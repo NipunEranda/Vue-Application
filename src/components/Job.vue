@@ -116,14 +116,17 @@ export default {
     this.loadJsonData();
   },
   watch: {
+    //Wait for parameter changes
     $route(to, from) {
       this.id = to.params.id;
     },
   },
   methods: {
+    //Navigate to the homepage.
     goToHome() {
       this.$router.push("/");
     },
+    //Retrieve the job from the jobs list
     filterById(jsonObject, id) {
       this.job = jsonObject.filter(function (jsonObject) {
         return jsonObject["id"] == id;

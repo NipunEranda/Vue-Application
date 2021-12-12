@@ -21,6 +21,7 @@ const router = new VueRouter({
 
 Vue.mixin({
   methods: {
+    //Detect the job status and assign a color code.
     isFailed(job) {
       return job.jobStatus === "Completed"
         ? "blue"
@@ -28,11 +29,13 @@ Vue.mixin({
           ? "black"
           : "red";
     },
+    //Read json data from the file
     loadJsonData() {
       setTimeout(() => {
         this.jobs = require("./data/JobJsonFile.json").jobs;
       }, 300);
     },
+    //Detect the job status and assign a icon
     isFailedIcon(job) {
       return job.jobStatus === "Completed"
         ? "fa fa-check-circle"
@@ -40,6 +43,7 @@ Vue.mixin({
           ? "fa fa-ban"
           : "fa fa-exclamation-circle";
     },
+    //Detect the job status and assign a icon color
     isFailedIconColor(job) {
       return job.jobStatus === "Completed"
         ? "green"
@@ -47,6 +51,7 @@ Vue.mixin({
           ? "black"
           : "red";
     },
+    //Convert duration into a standard format
     calculateDuration(duration) {
       var h = Math.floor(duration / 1000 / 3600);
       var m = Math.floor(duration / 1000 % 3600 / 60);
@@ -58,6 +63,7 @@ Vue.mixin({
       var miliseconds = ms > 0 ? ms + " ms" : "";
       return hours + minutes + seconds + miliseconds;
     },
+    //Check if user at the first Page and disable the previous button
     isAtFirstPage(startIndex) {
       return startIndex === 1 ? "disabled" : "";
     },

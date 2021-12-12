@@ -129,6 +129,7 @@ export default {
     this.loadJsonData();
   },
   methods: {
+    //Render the next item list
     nextPage() {
       let tempValue = this.endIndex + 9;
       if (tempValue > this.countRows) {
@@ -141,6 +142,7 @@ export default {
         this.endIndex += 9;
       }
     },
+    //Render the previous item list
     prevPage() {
       if (this.endIndex == this.countRows) {
         this.endIndex = this.startIndex - 1;
@@ -151,11 +153,13 @@ export default {
         this.endIndex -= 9;
       }
     },
+    //Navigate to Jobs Page and show the selected job.
     goToJobPage(value) {
       this.$router.push({ name: "job", params: { id: value } });
     },
   },
   computed: {
+    //Search process
     filterByTerm() {
       if (this.searchTerm === "") {
         if (this.jobs) {
@@ -198,12 +202,14 @@ export default {
         return this.items.slice(this.startIndex - 1, this.endIndex);
       }
     },
+    //Count json object Count
     countRows() {
       if (this.searchTerm === "") {
         return this.jobs.length;
       }
       return this.rowCount;
     },
+    //Method to avoid instant function activation using a debounced input.
     input: {
       get() {
         return this.debouncedInput;
