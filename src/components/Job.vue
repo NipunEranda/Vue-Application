@@ -54,7 +54,7 @@
         <div class="row record">
           <div class="col-2">
             <span :style="{ color: `${isFailed(job)}` }">{{
-              job.jobStatus
+              job.jobStatus === "Completed" ? "Job Completed" : job.jobStatus === "Cancelled" ? "Job Cancelled" : "Job Error" 
             }}</span>
           </div>
           <div class="col-2">
