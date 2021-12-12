@@ -8,21 +8,7 @@
         <div class="col-8 topic">
           Files /
           {{
-            new Date(job.queuedTime).toLocaleString("default", {
-              year: "numeric",
-            }) +
-            "-" +
-            new Date(job.queuedTime).toLocaleString("default", {
-              month: "numeric",
-            }) +
-            "-" +
-            new Date(job.queuedTime).toLocaleString("default", {
-              day: "numeric",
-            }) +
-            " " +
-            new Date(job.queuedTime)
-              .toUTCString("si-LK", { hour12: false })
-              .split(" ")[4]
+            job.name
           }}
         </div>
         <div class="col-4">
@@ -45,19 +31,19 @@
           >
         </div>
         <div class="row header">
-          <div class="col-2">Status</div>
-          <div class="col-2">Queued</div>
-          <div class="col-3">Started</div>
-          <div class="col-3">Ended</div>
+          <div class="col-3">Status</div>
+          <div class="col-3">Queued</div>
+          <div class="col-2">Started</div>
+          <div class="col-2">Ended</div>
           <div class="col-2" style="text-align: right">Duration</div>
         </div>
         <div class="row record">
-          <div class="col-2">
+          <div class="col-3">
             <span :style="{ color: `${isFailed(job)}` }">{{
               job.jobStatus === "Completed" ? "Job Completed" : job.jobStatus === "Cancelled" ? "Job Cancelled" : "Job Error" 
             }}</span>
           </div>
-          <div class="col-2">
+          <div class="col-3">
             {{
               new Date(job.queuedTime).toLocaleString("default", {
                 day: "numeric",
@@ -76,7 +62,7 @@
                 .split(" ")[4]
             }}
           </div>
-          <div class="col-3">
+          <div class="col-2">
             {{
               job.startTime === ""
                 ? " - "
@@ -85,7 +71,7 @@
                     .split(" ")[4]
             }}
           </div>
-          <div class="col-3">
+          <div class="col-2">
             {{
               job.endTime === ""
                 ? " - "

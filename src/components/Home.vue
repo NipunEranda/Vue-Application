@@ -50,22 +50,7 @@
             ></span>
             <span>
               {{
-                "/" +
-                new Date(job.startTime).toLocaleString("default", {
-                  year: "numeric",
-                }) +
-                "-" +
-                new Date(job.startTime).toLocaleString("default", {
-                  month: "numeric",
-                }) +
-                "-" +
-                new Date(job.startTime).toLocaleString("default", {
-                  day: "numeric",
-                }) +
-                " " +
-                new Date(job.startTime)
-                  .toUTCString("si-LK", { hour12: false })
-                  .split(" ")[4]
+                "/" + job.name
               }}
             </span>
           </div>
