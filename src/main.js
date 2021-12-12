@@ -37,31 +37,28 @@ Vue.mixin({
       return job.jobStatus === "Completed"
         ? "fa fa-check-circle"
         : job.jobStatus === "Cancelled"
-        ? "fa fa-ban"
-        : "fa fa-exclamation-circle";
+          ? "fa fa-ban"
+          : "fa fa-exclamation-circle";
     },
     isFailedIconColor(job) {
       return job.jobStatus === "Completed"
         ? "green"
         : job.jobStatus === "Cancelled"
-        ? "black"
-        : "red";
+          ? "black"
+          : "red";
     },
-    calculateDuration(job) {
-      let hours = Math.floor(job.duration / 3600);
-      let minutes = Math.floor(job.duration / 60);
-      let seconds = job.duration - minutes * 60;
-
-      if (hours > 0) {
-        minutes -= 60;
-        return hours + "hrs " + minutes + "ms " + seconds + "s";
-      } else if (minutes > 0 && seconds > 0) {
-        return minutes + "ms " + seconds + "s";
-      } else {
-        return seconds + "s";
-      }
+    calculateDuration(duration) {
+      var h = Math.floor(duration / 1000 / 3600);
+      var m = Math.floor(duration / 1000 % 3600 / 60);
+      var s = Math.floor(duration / 1000 % 3600 % 60);
+      var ms = duration - ( (h * 3600 * 1000) + ( m * 60 * 1000 ) + (s * 1000) );
+      var hours = h > 0 ? h + (h == 1 ? " hr " : " hrs ") : "";
+      var minutes = m > 0 ? m + (m == 1 ? " min " : " mins ") : "";
+      var seconds = s > 0 ? s + (s == 1 ? " sec " : " sec ") : "";
+      var miliseconds = ms > 0 ? ms + " ms" : "";
+      return hours + minutes + seconds + miliseconds;
     },
-    isAtFirstPage(startIndex){
+    isAtFirstPage(startIndex) {
       return startIndex === 1 ? "disabled" : "";
     },
   }

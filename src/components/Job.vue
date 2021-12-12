@@ -3,6 +3,7 @@
     <div class="container">
       <div>
         <span>{{ filterById(jobs, id) }}</span>
+                <span> {{ job.id }} </span>
       </div>
       <div class="topicBar row">
         <div class="col-8 topic">
@@ -95,7 +96,7 @@
             }}
           </div>
           <div class="col-2" style="text-align: right">
-            {{ calculateDuration(job) }}
+            {{ calculateDuration(job.duration) }}
           </div>
         </div>
       </div>
